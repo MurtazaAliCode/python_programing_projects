@@ -2,7 +2,7 @@ import streamlit as st
 import random
 
 # Website Title
-st.title("🌟 Welcome to My Website 🌟")
+st.title(" Welcome to My Website ")
 st.header("Learn, Enjoy, and Get Inspired")
 
 # Simple Calculator
