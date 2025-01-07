@@ -1,32 +1,21 @@
-print("\t======================={ QR Code Generator }=======================\n")
+import streamlit as st
+import pandas as pd
 
-# making qrcode
-import qrcode
-from flask import Flask
+st.title('My first app')
 
-img = qrcode.make('https://www.google.com')
-img.save('qrcode.png')
+height = st.slider('Select your height(in cm)', 150, 200, 170)
+weaight = st.slider('Select your weight(in kg)', 40, 100, 60)
 
+bmi = weaight / (height/100)**2
 
+st.write(f'Your BMI is {bmi}')
 
-# making docode of qrcode
-import cv2
-
-# Ensure the image path is correct
-image_path = 'qrcode.png'
-
-# Read the image
-image = cv2.imread(image_path)
-if image is None:
-    print(f"Error: Image '{image_path}' not found!")
+if bmi < 18.5:
+    st.write('Underweight')
+elif bmi >= 18.5 and bmi < 25:
+    st.write('Normal weight')
+elif bmi >= 25 and bmi < 30:
+    st.write('Overweight')
 else:
-    # Create QRCodeDetector
-    qr_detector = cv2.QRCodeDetector()
-    
-    # Detect and decode QR code
-    decoded_text, points, _ = qr_detector.detectAndDecode(image)
-    
-    if decoded_text:
-        print(f"Decoded QR Code Data: {decoded_text}")
-    else:
-        print("No QR Code detected in the image.")
+    st.write('Obesity')
+
