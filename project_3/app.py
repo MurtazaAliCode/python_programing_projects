@@ -1,6 +1,6 @@
 import random
 
-print("\t\t=================={project of computer guss the Number}==================\n")
+print("\t\t=================={project of computer guess the Number}==================\n")
 
 import random
 
