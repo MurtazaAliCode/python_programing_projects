@@ -2,20 +2,17 @@ import os
 
 def create_file(file_name):
     try:
-        with open("file_name", "x") as f:
+        with open(file_name, "x") as f:
             print(f"{file_name} created successfully.")
-
     except FileExistsError:
         print(f"File {file_name} already exists.")
-        
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while creating the file: {e}")
 
 def view_all_files():
     files = os.listdir()
     if not files:
         print("No files found.")
-
     else:
         print("Files in the directory:")
         for file in files:
@@ -25,37 +22,31 @@ def delete_file(file_name):
     try:
         os.remove(file_name)
         print(f"{file_name} deleted successfully.")
-
     except FileNotFoundError:
         print(f"File {file_name} not found.")
-
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while deleting the file: {e}")
 
 def read_file(file_name):
     try:
-        with open("file_name", "r") as f:
+        with open(file_name, "r") as f:
             content = f.read()
             print(f"Content of {file_name}:\n{content}")
-
     except FileNotFoundError:
         print(f"File {file_name} not found.")
-
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while reading the file: {e}")
 
 def edit_file(file_name):
     try:
-        with open("file_name", "a") as f:
+        with open(file_name, "a") as f:
             content = input("Enter data to add: ")
             f.write(content + "\n")
             print(f"Content added to {file_name} successfully.")
-
     except FileNotFoundError:
         print(f"File {file_name} not found.")
-
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred while editing the file: {e}")
 
 def display_menu():
     while True:
@@ -87,11 +78,10 @@ def display_menu():
         elif choice == "5":
             file_name = input("Enter the file name to edit: ")
             edit_file(file_name)
-
+            
         elif choice == "6":
             print("Exiting the application...")
             break
-
         else:
             print("Invalid choice. Please enter a number between 1 and 6.")
 

@@ -2,6 +2,7 @@ print("\t=========================={project of countdown timmer}================
 
 import time
 
+user = int(input("Enter a time = "))
 def countdowntimer(Time):
 
     while Time:       
@@ -13,5 +14,5 @@ def countdowntimer(Time):
        
     print('Timer completed!')
 
-countdowntimer(5)
+countdowntimer(user)
       
