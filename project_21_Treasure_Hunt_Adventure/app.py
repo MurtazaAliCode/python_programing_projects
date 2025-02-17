@@ -37,6 +37,7 @@ class Player:
         print(f"❤️ Health: {self.health} | ⚡ Energy: {self.energy} | 💰 Treasure: {self.treasure}\n")
 
 # Game loop
+WINNING_TREASURE = 300  # Set the winning treasure limit
 player_name = input("Enter your adventurer's name: ")
 player = Player(player_name)
 
@@ -45,6 +46,12 @@ time.sleep(1)
 
 while player.health > 0:
     player.status()
+    
+    # Check if the player has won
+    if player.treasure >= WINNING_TREASURE:
+        print(f"🎊 CONGRATULATIONS, {player.name}! You have collected {player.treasure} gold coins and won the game! 🏆")
+        break
+
     print("Choose an action: (1) Search for Treasure 💰 (2) Rest 😴 (3) Quit 🚪")
     choice = input("Enter your choice: ")
 
