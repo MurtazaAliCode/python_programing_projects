@@ -1,73 +1,73 @@
-# Contact Management Book
+import streamlit as st
 
-contacts = {}
+# Initialize session state if not already present
+if "contacts" not in st.session_state:
+    st.session_state.contacts = {}
 
-while True:
-    print("\nContact Management Book\n")
-    print("1. Create contact")
-    print("2. View contact")
-    print("3. Update contact")
-    print("4. Delete contact")
-    print("5. Search contact")
-    print("6. Count contacts")
-    print("7. Exit")
+st.title("📞 Contact Management Book")
 
-    choice = input("Enter your choice: ")
+menu = ["Create Contact", "View Contact", "Update Contact", "Delete Contact", "Search Contact", "Count Contacts"]
+choice = st.sidebar.selectbox("Select an option", menu)
 
-    if choice == "1":
-        name = input("Enter your name: ").strip()
-        if name in contacts:
-            print(f"Contact name {name} already exists.")
+if choice == "Create Contact":
+    st.subheader("Create a New Contact")
+    name = st.text_input("Enter your name:")
+    age = st.number_input("Enter your age:", min_value=1, max_value=120, step=1)
+    mobile = st.text_input("Enter your mobile number:")
+    if st.button("Add Contact"):
+        if name and mobile:
+            st.session_state.contacts[name] = {"Age": age, "Mobile": mobile}
+            st.success(f"Contact {name} has been created successfully.")
         else:
-            age = input("Enter your age: ").strip()
-            mobile = input("Enter your mobile number: ").strip()
-            contacts[name] = {"Age": int(age), "Mobile": mobile}
-            print(f"Contact {name} has been created successfully.")
+            st.warning("Please enter valid details.")
 
-    elif choice == "2":
-        name = input("Enter the name to view: ").strip()
-        if name in contacts:
-            contact = contacts[name]
-            print(f"Name: {name}, Age: {contact['Age']}, Mobile number: {contact['Mobile']}")
+elif choice == "View Contact":
+    st.subheader("View Contact Details")
+    name = st.text_input("Enter the name to view:")
+    if st.button("View"):
+        if name in st.session_state.contacts:
+            contact = st.session_state.contacts[name]
+            st.write(f"**Name:** {name}\n**Age:** {contact['Age']}\n**Mobile:** {contact['Mobile']}")
         else:
-            print("Contact not found!")
+            st.error("Contact not found!")
 
-    elif choice == "3":
-        name = input("Enter the name to update: ").strip()
-        if name in contacts:
-            new_name = input("Enter updated name: ").strip()
-            age = input("Enter updated age: ").strip()
-            mobile = input("Enter updated mobile number: ").strip()
-            contacts.pop(name)  # Remove the old contact
-            contacts[new_name] = {"Age": int(age), "Mobile": mobile}
-            print(f"Contact {new_name} has been updated successfully.")
+elif choice == "Update Contact":
+    st.subheader("Update Contact")
+    name = st.text_input("Enter the name to update:")
+    if st.button("Search Contact"):
+        if name in st.session_state.contacts:
+            new_name = st.text_input("Enter updated name:", value=name)
+            age = st.number_input("Enter updated age:", min_value=1, max_value=120, step=1)
+            mobile = st.text_input("Enter updated mobile number:", value=st.session_state.contacts[name]['Mobile'])
+            if st.button("Update Contact"):
+                st.session_state.contacts.pop(name)
+                st.session_state.contacts[new_name] = {"Age": age, "Mobile": mobile}
+                st.success(f"Contact {new_name} has been updated successfully.")
         else:
-            print("Contact not found!")
+            st.error("Contact not found!")
 
-    elif choice == "4":
-        name = input("Enter the name to delete: ").strip()
-        if name in contacts:
-            del contacts[name]
-            print(f"Contact {name} deleted successfully.")
+elif choice == "Delete Contact":
+    st.subheader("Delete Contact")
+    name = st.text_input("Enter the name to delete:")
+    if st.button("Delete Contact"):
+        if name in st.session_state.contacts:
+            del st.session_state.contacts[name]
+            st.success(f"Contact {name} deleted successfully.")
         else:
-            print("Contact not found!")
+            st.error("Contact not found!")
 
-    elif choice == "5":
-        search_name = input("Enter contact name to search: ").strip()
+elif choice == "Search Contact":
+    st.subheader("Search Contact")
+    search_name = st.text_input("Enter contact name to search:")
+    if st.button("Search"):
         found = False
-        for name, contact in contacts.items():
+        for name, contact in st.session_state.contacts.items():
             if search_name.lower() in name.lower():
-                print(f"Name: {name}, Age: {contact['Age']}, Mobile number: {contact['Mobile']}")
+                st.write(f"**Name:** {name}\n**Age:** {contact['Age']}\n**Mobile:** {contact['Mobile']}")
                 found = True
         if not found:
-            print("Contact not found!")
+            st.error("Contact not found!")
 
-    elif choice == "6":
-        print(f"Total contacts in your contact book: {len(contacts)}")
-
-    elif choice == "7":
-        print("Goodbye... Closing the program.")
-        break
-
-    else:
-        print("Invalid input. Please try again.")
+elif choice == "Count Contacts":
+    st.subheader("Total Contacts")
+    st.write(f"Total contacts in your contact book: **{len(st.session_state.contacts)}**")
